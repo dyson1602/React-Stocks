@@ -6,21 +6,23 @@
       "name": "Google",
       "type": "Tech",
       "price": 1194.8,
-      "favorite": true
+      "portfolio": true
     },
     {
       "id": 2,
       "ticker": "FB",
       "name": "Facebook",
       "type": "Tech",
-      "price": 168.85
+      "price": 168.85,
+      "portfolio": true
     },
     {
       "id": 3,
       "ticker": "TWTR",
       "name": "Twitter",
       "type": "Tech",
-      "price": 29.41
+      "price": 29.41,
+      "portfolio": true
     },
     {
       "id": 4,

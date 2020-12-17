@@ -9,9 +9,9 @@ class MainContainer extends Component {
 
   state = {
     stocksArray: [],
-    sortAlpha: true,
-    sortPrice: false,
-    filter: ""
+    filteredArray: [],
+    sort: "None",
+    filter: "All"
   }
 
   componentDidMount() {
@@ -20,21 +20,26 @@ class MainContainer extends Component {
 
   //EVENT HANDLERS
 
-  buyStockHandler = (stockObj) => {
+  stockHandler = (stockObj) => {
     let stock = stockObj
-    if (stock.favorite === true) {
-      stock.favorite = false
+
+    if (stock.portfolio === true) {
+      stock.portfolio = false
     } else {
-      stock.favorite = true
+      stock.portfolio = true
     }
+    
     let newArray = [...this.state.stocksArray]
     let idx = newArray.findIndex(stk => stk.id === stock.id)
     newArray[idx] = stock
+    
     this.setState({ stocksArray: newArray })
-    console.log(stock)
     this.buyOrSellFetch(stock)
   }
-
+  
+  filterStocksHandler = (e) => {
+    this.setState({filter: e})
+  }
 
   //API REQUESTS
 
@@ -54,11 +59,45 @@ class MainContainer extends Component {
     })
   }
 
-
   //HELPER FUNCTIONS
 
-  filterStocksArray = () => {
 
+  // filteredStocksArray = () => {
+  //   let filteredStocks = [...this.state.stocksArray]
+
+  //   if(this.state.filter !== "All"){
+  //     filteredStocks =  filteredStocks.filter(stock => stock.type === this.state.filter)        
+  //   } 
+
+  //   switch(this.state.sort){
+  //     case "Alphabetically":
+  //       return filteredStocks.sort((a,b) => a.name > b.name ? 1 : -1)
+  //     case "Price":
+  //         return filteredStocks.sort((a,b) => a.price > b.price ? 1 : -1)
+  //     default:
+  //       return filteredStocks
+  //   }
+  // }
+
+  modifyStocksArray = () => {
+    let filteredStocks = [...this.state.stocksArray]
+
+    if (this.state.filter !== "All") {
+      filteredStocks = filteredStocks.filter(stock => stock.type === this.state.filter)
+    }
+    
+    switch(this.state.sort){
+      case "Alphabetically":
+        return filteredStocks.sort((a,b) => a.name > b.name ? 1 : -1)
+      case "Price":
+        return filteredStocks.sort((a,b) => a.price > b.price ? 1 : -1)
+      default:
+        return filteredStocks
+    }
+  }
+
+  portfolioArray = () => {
+    return this.modifyStocksArray().filter(stock => stock.portfolio)
   }
 
   //RENDER
@@ -66,17 +105,17 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar filterStocksHandler={this.filterStocksHandler}/>
 
         <div className="row">
           <div className="col-8">
 
-            <StockContainer stocksArray={this.state.stocksArray} clickHandler={this.buyStockHandler} />
+            <StockContainer stocksArray={this.modifyStocksArray()} clickHandler={this.stockHandler} />
 
           </div>
           <div className="col-4">
 
-            <PortfolioContainer />
+            <PortfolioContainer portfolioArray={this.portfolioArray()} clickHandler={this.stockHandler}/>
 
           </div>
         </div>
