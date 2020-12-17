@@ -61,24 +61,6 @@ class MainContainer extends Component {
 
   //HELPER FUNCTIONS
 
-
-  // filteredStocksArray = () => {
-  //   let filteredStocks = [...this.state.stocksArray]
-
-  //   if(this.state.filter !== "All"){
-  //     filteredStocks =  filteredStocks.filter(stock => stock.type === this.state.filter)        
-  //   } 
-
-  //   switch(this.state.sort){
-  //     case "Alphabetically":
-  //       return filteredStocks.sort((a,b) => a.name > b.name ? 1 : -1)
-  //     case "Price":
-  //         return filteredStocks.sort((a,b) => a.price > b.price ? 1 : -1)
-  //     default:
-  //       return filteredStocks
-  //   }
-  // }
-
   modifyStocksArray = () => {
     let filteredStocks = [...this.state.stocksArray]
 
@@ -100,12 +82,17 @@ class MainContainer extends Component {
     return this.modifyStocksArray().filter(stock => stock.portfolio)
   }
 
+  updateSort = (sortValue) => {
+    console.log(sortValue)
+    this.setState({sort: sortValue})
+  }
+
   //RENDER
 
   render() {
     return (
       <div>
-        <SearchBar filterStocksHandler={this.filterStocksHandler}/>
+        <SearchBar filterStocksHandler={this.filterStocksHandler} updateSort={this.updateSort}/>
 
         <div className="row">
           <div className="col-8">

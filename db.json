@@ -64,7 +64,8 @@
       "ticker": "NKE",
       "name": "Nike",
       "type": "Sportswear",
-      "price": 84.56
+      "price": 84.56,
+      "portfolio": false
     },
     {
       "id": 10,
