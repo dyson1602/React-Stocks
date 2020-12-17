@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = () => {
   return (
-    <div>
+    <div> 
 
       <strong>Sort by:</strong>
       <label>
